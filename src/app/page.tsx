@@ -9,6 +9,8 @@ import { AppDispatch,RootState } from "@/store/store";
 import { clearChat } from "@/store/chatSlice";
 import socket from "../socket"
 import { useRouter } from "next/navigation";
+import Navbar from "@/Components/Navbar";
+
 export default function Home() {
   const [select,setSelect] = useState(false)
   const dispatch = useDispatch()
@@ -54,6 +56,8 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+    <Navbar />
     <div className="flex h-screen items-center justify-items-center min-h-screen gap-16 px-[5vh] pt-[10vh] pb-[3vh] font-[family-name:var(--font-geist-sans)]">
       <main className="flex w-full min-h-full gap-3  items-center">
          <Slider />
@@ -61,5 +65,6 @@ export default function Home() {
          {chat ? <ChatRoom /> : <NoChat />}
       </main>
     </div>
+    </>
   );
 }

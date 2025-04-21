@@ -34,6 +34,30 @@ export const getUsers = createAsyncThunk(
       }
 )
 
+export const sign_up = createAsyncThunk(
+    "sign-up/user",
+    async (data: any)=>{
+        try{
+            const response = await axios.post("http://localhost:5000/api/user/add", data);
+
+            if(response.status === 404){
+                alert("email alredy exist")
+                return
+            }
+
+            if(response.status === 200){
+                redirect("/")
+            }
+            
+            return response.data
+
+        }catch(error){
+            console.log("error in login",error);
+          throw error
+        }
+    }
+)
+
 export const login = createAsyncThunk(
     "login/user",
     async (credentials: {email: String, password: String} )=>{

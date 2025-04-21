@@ -37,14 +37,16 @@ export default function Navbar() {
       </div>
       <div className="flex items-center ">
         {is ? (
-          <div className="mr-5 flex items-center gap-3  font-bold">
+          <div className="mr-5 flex items-center gap-7  font-bold">
             <Link href="/sign-in">Logout</Link>
+            <div className="flex items-center gap-1 font-bold">
             <h1> {login?.firstname}</h1>
             <img
               className="w-11 h-11 object-cover"
               src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?ga=GA1.1.1329927775.1744784904&semt=ais_hybrid&w=740"
               alt=""
             />
+            </div>
           </div>
         ) : (
           <Link href="/sign-in" className="bg-green-500 p-2 px-3 rounded-xl">

@@ -27,10 +27,9 @@ export default function ChatRoom() {
   const dispatch = useDispatch<AppDispatch>();
   const id = localStorage.getItem("sender");
 
-
   console.log("select User", selectedChat, sender);
   console.log("chatroom chats", chat);
-  console.log("socket get data",senderID, selectedChat?.chat?._id );
+  console.log("socket get data", senderID, selectedChat?.chat?._id);
 
   const handelSend = (e: any) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ export default function ChatRoom() {
     );
     dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));
     socket.emit("send", {
-      message
+      message,
     });
     setMessage("");
   };
@@ -52,7 +51,7 @@ export default function ChatRoom() {
     const confrim = window.confirm("are you want to delete message ? ");
     if (confrim) {
       dispatch(deleteMessege({ chatId: chats?._id, messageId: id }));
-      socket.emit("delete_message", chats?._id)
+      socket.emit("delete_message", chats?._id);
     }
   };
 
@@ -60,39 +59,38 @@ export default function ChatRoom() {
     const confrim = window.confirm("are you want to delete message ? ");
     if (confrim) {
       dispatch(deleteChat({ id: chats?._id }));
-      socket.emit("delete_message", chats?._id)
+      socket.emit("delete_message", chats?._id);
     }
   };
 
   useEffect(() => {
     const id: any = localStorage.getItem("sender");
     setSender(id);
-    console.log("id", id );
-    console.log("hello get data",senderID, selectedChat?.chat?._id );
+    console.log("id", id);
+    console.log("hello get data", senderID, selectedChat?.chat?._id);
 
     // Set up event listeners
-   
-    socket.on("send", (data: any)=>{
-      console.log("is socket send message", id , selectedChat?.chat?._id ); 
-      dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));    
-   })
-  socket.on("delete_message",  (data: any)=>{
-    console.log("is socket delect message", id , selectedChat?.chat?._id ); 
-    dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));    
- });
-  socket.on("delete_chat",  (data: any)=>{
-    console.log("is socket delete chat", id , selectedChat?.chat?._id ); 
-    dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));    
- });
 
-  // Clean up event listeners
-  return () => {
-    socket.off("send");
-    socket.off("delete_message");
-    socket.off("delete_chat");
-  };
+    socket.on("send", (data: any) => {
+      console.log("is socket send message", id, selectedChat?.chat?._id);
+      dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));
+    });
+    socket.on("delete_message", (data: any) => {
+      console.log("is socket delect message", id, selectedChat?.chat?._id);
+      dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));
+    });
+    socket.on("delete_chat", (data: any) => {
+      console.log("is socket delete chat", id, selectedChat?.chat?._id);
+      dispatch(getChat({ sender: id, receiver: selectedChat?.chat?._id }));
+    });
 
-  }, [dispatch,selectedChat,chats]);
+    // Clean up event listeners
+    return () => {
+      socket.off("send");
+      socket.off("delete_message");
+      socket.off("delete_chat");
+    };
+  }, [dispatch, selectedChat, chats]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
